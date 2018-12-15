@@ -1,22 +1,35 @@
 '''
 
-This is a Project Euler problem with a neat solution that combines efficient design and Python functionality.
+This is a Project Euler problem with a neat solution that combines efficient
+design and Python functionality.
 
-I like it how you can do all steps, including generating primes, in one pass.  The Counter object makes the code extra clean.
+I like it how you can do all steps, including generating primes, in one pass.
+The Counter object makes the code extra clean.
 
 Simple problem:
 
-Given N <= 1000, find the first triangle number with more than N unique factors.  The kth triangle number is just the sum of 1, 2, ... k.
+Given N <= 1000, find the first triangle number with more than N unique factors.
+The kth triangle number is just the sum of 1, 2, ... k.
 
 Helpful Observations:
 
 1.  The k^th triangle number is ( k * (k + 1) ) / 2
 
-2.  Natural numbers have a unique prime factorization.  If a prime number p_i divides natural number x t_i times, each unique factor of x has between 0 and t_i p_i's.  So, the number of unique factors is just the product of (t_i + 1) across i's.
+2.  Natural numbers have a unique prime factorization.  If a prime number p_i
+divides natural number x t_i times, each unique factor of x has between 0 and
+t_i p_i's.  So, the number of unique factors is just the product of (t_i + 1)
+across i's.
 
-3.  The i^th triangular number is (i * (i + 1))/2 so the (i+1)^th is ( (i+1) * (i+2) )/2.  So, if you factor triangular numbers in order, you will encounter odd natural numbers in order, and (with the exception of 2) consequently primes in order.
+3.  The i^th triangular number is (i * (i + 1))/2 so the (i+1)^th is
+( (i+1) * (i+2) )/2.  So, if you factor triangular numbers in order, you will
+encounter odd natural numbers in order, and (with the exception of 2)
+consequently primes in order.
 
-4.  Say n if a natural number and p is its smallest prime factor, the prime factorization of n is just {p} + the prime factorization of n/p.  If we're going through triangular numbers in order we'll alread know the factorization of n onces all 2's are removed.  We can save a lot of work by memorizing previous results.
+4.  Say n if a natural number and p is its smallest prime factor, the prime
+factorization of n is just {p} + the prime factorization of n/p.  If we're
+going through triangular numbers in order we'll already know the factorization
+of n onces all 2's are removed.  We can save a lot of work by memorizing
+previous results.
 
 '''
 
@@ -68,14 +81,14 @@ def num_factors(factors):
 triangle_number = lambda x : ( x * (x + 1) )/2
 
 
-# there's more than one test case, so I'll just compute the answer for the max case, and
-# memorize along the way, that will give me all the needed answers
+# there's more than one test case, so I'll just compute the answer for the max
+# case, and memorize along the way, that will give me all the needed answers
 
 max_N = 1000             # biggest case
 i = 1                    # the number of triangle number we are on
 seek = 1                 # the number of factors we are seeking to exceed
 primes = [2]             # running list of discovered primes
-mem = {1 : Counter()}    # dictionary : n -> prime factorization; memory of prior results
+mem = {1 : Counter()}    # dictionary : n -> prime factorization; memory of results
 ans = {}                 # dictionary : n -> first triangle number with > n factors
 
 while seek <= max_N:
